@@ -7,14 +7,14 @@ BaseOfLoader equ 0x1000
 OffsetOfLoader equ 0x00
 
 ;FAT12引导扇区结构
-jmp boot_begin
+jmp boot_begin/*{{{*/
 nop
 BS_OEMName db 'MINEBOOT'
 BPB_BytesPerSec dw 512
 BPB_SecPerClus db 1
 BPB_RsvdSecCnt dw 1
 BPB_NumFATS db 2
-BPB_RootEntCnt dw 224
+BPB_RootEntCnt dw 224/*{{{*/
 BPB_TotSec16 dw 2880
 BPB_Media db 0f0h
 BPB_FATSz dw 9
@@ -26,8 +26,8 @@ BS_DrvNum db 0
 BS_Reservedl db 0
 BS_BootSig db 29h
 BS_VolID dd 0
-BS_VolLab db 'boot loader'
-BS_FileSysType db 'FAT12   '
+BS_VolLab db 'boot loader'/*}}}*/
+BS_FileSysType db 'FAT12   '/*}}}*/
 
 ;boot用到的变量
 SectorNo dw 19
@@ -35,6 +35,7 @@ LoaderName db "LOADER  BIN"
 CurrentLoaderBinOffset dw 0
 BootMsg db "Start boot"
 ErrorMsg db "ERROR:No Loader Found"
+
 ;boot开始代码
 boot_begin:
 	mov ax,cs
