@@ -11,7 +11,7 @@ OffsetTmpOfKernel equ 0x7e00
 MemoryStructBuffer equ 0x7e00
 
 ;FAT12文件系统数据
-BS_OEMName db 'MINEBOOT'/*{{{*/
+BS_OEMName db 'MINEBOOT' ;/*{{{*/
 BPB_BytesPerSec dw 512
 BPB_SecPerClus db 1
 BPB_RsvdSecCnt dw 1
@@ -29,7 +29,7 @@ BS_Reservedl db 0
 BS_BootSig db 29h
 BS_VolID dd 0
 BS_VolLab db 'boot loader'
-BS_FileSysType db 'FAT12   '/*}}}*/
+BS_FileSysType db 'FAT12   ' ;/*}}}*/
 
 ;loader代码开始处
 [BITS 16]
@@ -39,12 +39,12 @@ loader_begin:
 	mov es,ax
 	
 	;打印LoaderMsg
-	mov cx,12/*{{{*/
+	mov cx,12 ;/*{{{*/
 	mov dx,0
 	mov bp,LoaderMsg
 	mov bx,7
 	mov ax,1301h
-	int 10h	/*}}}*/
+	int 10h	;/*}}}*/
 	                                                     
 
 	;开启A20地址线进入Big Real Mode	
