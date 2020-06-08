@@ -1,4 +1,5 @@
 *.txt
 *.ini
 *.bin
+*.cmd
 Makefile

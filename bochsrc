@@ -9,3 +9,5 @@ log:bochsout.txt
 mouse:enabled=0
 
 #display_library: win32,options="gui_debug"
+#config_interface: win32config
+#display_library: win32, options="traphotkeys"
