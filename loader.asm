@@ -47,6 +47,13 @@ GDTR_32:
 SelectorDate32 equ 8
 SelectorCode32 equ 8*2 ;}}}
 
+;保护模式下IDT临时数据
+IDT:	;{{{
+	times 0x50 dq 0
+IDTR:
+	dw $-IDT-1
+	dd IDT		;}}}
+	
 ;loader代码开始处
 [BITS 16]
 loader_begin:
@@ -187,8 +194,25 @@ printDot:
 	cmp ax,0ff8h
 	jc loadNextClus		;}}}
 	
+	;从real mode进入protect mode
+	cli		;{{{
+	db 0x66
+	lgdt [GDTR_32]
+	db 0x66
+	lidt [IDTR]
+	;开启保护模式
+	mov eax,cr0
+	or eax,1
+	mov cr0,eax
+	;跳转到保护模式下的临时代码
+	jmp dword SelectorCode32:tmp_code_in_protect_mode		;}}}
+
+[BITS 32]
+;从protect mode进入IA-32 mode
+tmp_code_in_protect_mode:
 	jmp $
 
+[BITS 16]
 ;用相对扇区格式从软盘中读取多个扇区
 ;参数格式为 ax:相对扇区号 cl:读入扇区个数 es:bx：数据缓冲区
 Func_ReadSector:	;{{{
